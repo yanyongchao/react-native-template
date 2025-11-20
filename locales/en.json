@@ -1,0 +1,43 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "settings": "Settings",
+    "home": "Home",
+    "explore": "Explore",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "languageEnglish": "English",
+    "languageChinese": "中文"
+  },
+  "home": {
+    "title": "Welcome!",
+    "step1Title": "Step 1: Try it",
+    "step1Content": "Edit app/(tabs)/index.tsx to see changes. Press {{key}} to open developer tools.",
+    "step2Title": "Step 2: Explore",
+    "step2Content": "Tap the Explore tab to learn more about what's included in this starter app.",
+    "step3Title": "Step 3: Get a fresh start",
+    "step3Content": "When you're ready, run npm run reset-project to get a fresh app directory. This will move the current app to app-example.",
+    "action": "Action",
+    "share": "Share",
+    "more": "More",
+    "delete": "Delete",
+    "actionPressed": "Action pressed",
+    "sharePressed": "Share pressed",
+    "deletePressed": "Delete pressed"
+  },
+  "explore": {
+    "title": "Explore"
+  },
+  "modal": {
+    "title": "Modal"
+  }
+}

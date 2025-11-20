@@ -1,0 +1,43 @@
+{
+  "common": {
+    "welcome": "欢迎",
+    "settings": "设置",
+    "home": "首页",
+    "explore": "探索",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "theme": "主题",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "themeSystem": "跟随系统",
+    "languageEnglish": "English",
+    "languageChinese": "中文"
+  },
+  "home": {
+    "title": "欢迎！",
+    "step1Title": "步骤 1: 尝试一下",
+    "step1Content": "编辑 app/(tabs)/index.tsx 查看更改。按 {{key}} 打开开发者工具。",
+    "step2Title": "步骤 2: 探索",
+    "step2Content": "点击探索标签，了解此应用程序包含的更多内容。",
+    "step3Title": "步骤 3: 全新开始",
+    "step3Content": "准备好后，运行 npm run reset-project 获取新的应用程序目录。这将把当前应用程序移动到 app-example。",
+    "action": "操作",
+    "share": "分享",
+    "more": "更多",
+    "delete": "删除",
+    "actionPressed": "已按下操作",
+    "sharePressed": "已按下分享",
+    "deletePressed": "已按下删除"
+  },
+  "explore": {
+    "title": "探索"
+  },
+  "modal": {
+    "title": "模态框"
+  }
+}
