@@ -1,8 +1,4 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider as NavigationThemeProvider,
-} from '@react-navigation/native';
+import { ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
@@ -11,6 +7,7 @@ import '../locales/i18n';
 
 import { LanguageProvider } from '@/contexts/language-context';
 import { ThemeProvider, useTheme } from '@/contexts/theme-context';
+import { useThemeConfig } from '@/hooks/use-theme-config';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -18,9 +15,9 @@ export const unstable_settings = {
 
 function RootLayoutNav() {
   const { actualTheme } = useTheme();
-
+  const themeConfig = useThemeConfig();
   return (
-    <NavigationThemeProvider value={actualTheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationThemeProvider value={themeConfig}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />

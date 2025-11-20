@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 
 import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
@@ -23,19 +23,19 @@ export default function HomeScreen() {
       headerImage={
         <Image
           source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          className="h-[178px] w-[290px] absolute bottom-0 left-0"
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
+      <ThemedView className="flex-row items-center gap-2">
         <ThemedText type="title">{t('home.title')}</ThemedText>
         <HelloWave />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
+      <ThemedView className="gap-2 mb-2">
         <ThemedText type="subtitle">{t('home.step1Title')}</ThemedText>
         <ThemedText>{t('home.step1Content', { key: devToolKey })}</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
+      <ThemedView className="gap-2 mb-2">
         <Link href="/modal">
           <Link.Trigger>
             <ThemedText type="subtitle">{t('home.step2Title')}</ThemedText>
@@ -65,29 +65,10 @@ export default function HomeScreen() {
 
         <ThemedText>{t('home.step2Content')}</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
+      <ThemedView className="gap-2 mb-2">
         <ThemedText type="subtitle">{t('home.step3Title')}</ThemedText>
         <ThemedText>{t('home.step3Content')}</ThemedText>
       </ThemedView>
     </ParallaxScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

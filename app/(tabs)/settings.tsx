@@ -1,11 +1,9 @@
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Colors } from '@/constants/theme';
 import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 type Language = 'en' | 'zh';
@@ -31,82 +29,58 @@ export default function SettingsScreen() {
     isSelected: boolean,
     onPress: () => void
   ) => {
-    const backgroundColor = isSelected ? Colors[actualTheme].tint : Colors[actualTheme].background;
-    const textColor = isSelected ? '#fff' : Colors[actualTheme].text;
-
     return (
       <TouchableOpacity
         key={option.value}
-        style={[styles.optionButton, { backgroundColor, borderColor: Colors[actualTheme].tint }]}
+        className={`px-5 py-3 rounded-lg border min-w-[100px] items-center ${
+          isSelected
+            ? 'bg-primary-light dark:bg-primary-dark border-primary-light dark:border-primary-dark'
+            : 'bg-background-light dark:bg-background-dark border-primary-light dark:border-primary-dark'
+        }`}
         onPress={onPress}
       >
-        <Text style={[styles.optionText, { color: textColor }]}>{option.label}</Text>
+        <Text
+          className={`text-base font-medium ${
+            isSelected ? 'text-white' : 'text-text-light dark:text-text-dark'
+          }`}
+        >
+          {option.label}
+        </Text>
       </TouchableOpacity>
     );
   };
 
   return (
-    <ScrollView style={{ backgroundColor: Colors[actualTheme].background }}>
-      <ThemedView style={styles.container}>
-        <ThemedText type="title" style={styles.title}>
-          {t('settings.title')}
-        </ThemedText>
-
-        <ThemedView style={styles.section}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>
-            {t('settings.theme')}
+    <View className="flex-1 bg-background-light dark:bg-background-dark">
+      <ScrollView>
+        <View className="p-5">
+          <ThemedText type="title" className="mb-8">
+            {t('settings.title')}22
           </ThemedText>
-          <View style={styles.optionsContainer}>
-            {themeOptions.map(option =>
-              renderOption(option, theme === option.value, () => setTheme(option.value))
-            )}
-          </View>
-        </ThemedView>
 
-        <ThemedView style={styles.section}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>
-            {t('settings.language')}
-          </ThemedText>
-          <View style={styles.optionsContainer}>
-            {languageOptions.map(option =>
-              renderOption(option, language === option.value, () => setLanguage(option.value))
-            )}
+          <View className="mb-8">
+            <ThemedText type="subtitle" className="mb-4">
+              {t('settings.theme')}
+            </ThemedText>
+            <View className="flex-row flex-wrap gap-2.5">
+              {themeOptions.map(option =>
+                renderOption(option, theme === option.value, () => setTheme(option.value))
+              )}
+            </View>
           </View>
-        </ThemedView>
-      </ThemedView>
-    </ScrollView>
+
+          <View className="mb-8">
+            <ThemedText type="subtitle" className="mb-4">
+              {t('settings.language')}
+            </ThemedText>
+            <View className="flex-row flex-wrap gap-2.5">
+              {languageOptions.map(option =>
+                renderOption(option, language === option.value, () => setLanguage(option.value))
+              )}
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    marginBottom: 30,
-  },
-  section: {
-    marginBottom: 30,
-  },
-  sectionTitle: {
-    marginBottom: 15,
-  },
-  optionsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  optionButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    minWidth: 100,
-    alignItems: 'center',
-  },
-  optionText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-});

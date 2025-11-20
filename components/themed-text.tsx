@@ -1,4 +1,4 @@
-import { StyleSheet, Text, type TextProps } from 'react-native';
+import { Text, type TextProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/use-theme-color';
 
@@ -8,53 +8,33 @@ export type ThemedTextProps = TextProps & {
   type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
+const typeClassNames = {
+  default: 'text-base leading-6 text-text-light dark:text-text-dark',
+  defaultSemiBold: 'text-base leading-6 font-semibold text-text-light dark:text-text-dark',
+  title: 'text-[32px] font-bold leading-8 text-text-light dark:text-text-dark',
+  subtitle: 'text-xl font-bold text-text-light dark:text-text-dark',
+  link: 'text-base leading-[30px] text-primary-light dark:text-primary-dark',
+};
+
 export function ThemedText({
   style,
   lightColor,
   darkColor,
   type = 'default',
+  className,
   ...rest
-}: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+}: ThemedTextProps & { className?: string }) {
+  // 如果提供了自定义颜色，使用自定义颜色，否则使用 Tailwind 类名
+  const customColor =
+    lightColor || darkColor
+      ? useThemeColor({ light: lightColor, dark: darkColor }, 'text')
+      : undefined;
 
   return (
     <Text
-      style={[
-        { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
-        style,
-      ]}
+      className={`${typeClassNames[type]} ${className || ''}`}
+      style={[customColor ? { color: customColor } : {}, style]}
       {...rest}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
-  },
-});

@@ -1,12 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useColorScheme as useNativeWindColorScheme } from 'nativewind';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useColorScheme as useRNColorScheme } from 'react-native';
 
 type ThemeMode = 'light' | 'dark' | 'system';
+type ActualTheme = 'light' | 'dark';
 
 interface ThemeContextType {
   theme: ThemeMode;
-  actualTheme: 'light' | 'dark';
+  actualTheme: ActualTheme;
   setTheme: (theme: ThemeMode) => void;
 }
 
@@ -16,7 +25,17 @@ const THEME_STORAGE_KEY = '@app_theme';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const systemColorScheme = useRNColorScheme();
+  const { setColorScheme } = useNativeWindColorScheme();
   const [theme, setThemeState] = useState<ThemeMode>('system');
+
+  const getActualTheme = useCallback(
+    (themeMode: ThemeMode): ActualTheme => {
+      return themeMode === 'system' ? systemColorScheme || 'light' : themeMode;
+    },
+    [systemColorScheme]
+  );
+
+  const actualTheme = getActualTheme(theme);
 
   useEffect(() => {
     loadTheme();
@@ -26,7 +45,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
       if (savedTheme) {
-        setThemeState(savedTheme as ThemeMode);
+        const themeMode = savedTheme as ThemeMode;
+        setThemeState(themeMode);
+        setColorScheme(getActualTheme(themeMode));
       }
     } catch (error) {
       console.error('Error loading theme:', error);
@@ -37,12 +58,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
       setThemeState(newTheme);
+      setColorScheme(getActualTheme(newTheme));
     } catch (error) {
       console.error('Error saving theme:', error);
     }
   };
-
-  const actualTheme = theme === 'system' ? systemColorScheme || 'light' : theme;
 
   return (
     <ThemeContext.Provider value={{ theme, actualTheme, setTheme }}>
